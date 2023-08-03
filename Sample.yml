@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: |
+  This template creates custom service roles for CodePipeline and CloudFormation for deploying CloudFormation via CodePipeline.
+Resources:
+  CustomCodePipelineServiceRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      Description: Role to provide access to CodePipeline
+      RoleName: CustomCodePipelineServiceRole
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - codepipeline.amazonaws.com
+            Action:
+              - "sts:AssumeRole"
+      Policies:
+        - PolicyName: CustomCodePipelineServiceRoleInLinePolicy
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              # ... (rest of the policy statements here)
+
+  CustomCloudFormationServiceRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      Description: Role to provide access to CloudFormation
+      RoleName: CustomCloudFormationServiceRole
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - cloudformation.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/AmazonEC2FullAccess'
+        - 'arn:aws:iam::aws:policy/AWSConfigUserAccess'
+        - 'arn:aws:iam::aws:policy/IAMFullAccess'
+        - 'arn:aws:iam::aws:policy/AmazonECS_FullAccess'
+        - 'arn:aws:iam::aws:policy/CloudWatchFullAccess'
+        - 'arn:aws:iam::aws:policy/AmazonSNSFullAccess'
+        - 'arn:aws:iam::aws:policy/AmazonVPCFullAccess'
+        - 'arn:aws:iam::aws:policy/AmazonS3FullAccess'
+        - 'arn:aws:iam::aws:policy/AWSCloudTrail_FullAccess'
+        - 'arn:aws:iam::aws:policy/AWSLambda_FullAccess'
