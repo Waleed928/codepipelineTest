@@ -7,8 +7,7 @@
       - pip install cfn-lint
   build:
     commands:
-      - |
-        REPORT=$(uuidgen)-cfnlint-report.json
-        set +e; cfn-lint -f json > $REPORT
-        aws s3 cp $REPORT s3://$CFN_LINT_BUCKET/$AWS_ACCOUNT_ID/$(date +'%Y')/$(date +'%m')/$(date +'%d')
-
+      - REPORT=$(uuidgen)-cfnlint-report.json
+      - set +e
+      - cfn-lint -f json > $REPORT
+      - aws s3 cp $REPORT s3://$CFN_LINT_BUCKET/$AWS_ACCOUNT_ID/$(date +'%Y')/$(date +'%m')/$(date +'%d')
