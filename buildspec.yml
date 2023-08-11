@@ -10,4 +10,4 @@
       - REPORT=$(uuidgen)-cfnlint-report.json
       - set +e
       - cfn-lint -f json > $REPORT
-      - aws s3 cp $REPORT s3://cfn-lint-bucketwa
+      - aws s3 cp $REPORT s3://cfn-lint-bucketwa/
